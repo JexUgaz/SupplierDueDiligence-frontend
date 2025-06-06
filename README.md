@@ -1,54 +1,125 @@
-# React + TypeScript + Vite
+# Supplier Due Diligence Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern frontend application built with **React**, **Vite**, and **Tailwind CSS**, providing an intuitive interface for supplier screening and due diligence.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Clone the Project
 
-## Expanding the ESLint configuration
+Clone the repository and move into the project directory:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/JexUgaz/SupplierDueDiligence-frontend.git
+cd supplier-due-diligence-frontend
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Install Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Install the dependencies.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+# Using pnpm (recommended)
+pnpm install
 ```
+
+## 🖥️ Backend Setup
+
+This project requires the backend from the repository:
+
+https://github.com/JexUgaz/SupplierDueDiligence-backend.git
+
+Please clone that repo and follow its README instructions to install dependencies and run the backend server.
+
+Once the backend is running, make sure to note the host and port where it is available.
+
+---
+
+## ⚙️ Environment Setup
+
+1. Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+2. Update the .env file with your backend API URL, including host and port, and always ending with /api:
+
+```bash
+VITE_BACKEND_API_URL=http://<HOST>:<PORT>/api
+```
+
+Replace <HOST> and <PORT> with the actual backend server address and port. For example: http://localhost:5045/api.
+
+If you want to run the frontend in development mode, you can also create a .env.development file instead.
+
+## 🧪 Available Scripts
+
+### Development Mode
+
+Run the app locally in development mode:
+
+```bash
+# Default (uses .env)
+pnpm run dev
+
+# Or force development mode
+pnpm run dev:dev
+```
+
+This will start the app on http://localhost:5173 (default port).
+
+### Production Build
+
+Build the app for production:
+
+```bash
+pnpm run build
+```
+
+Preview the production build locally:
+
+```bash
+pnpm run preview
+```
+
+You can also serve it manually:
+
+```bash
+npx serve -s dist -l 5173
+```
+
+## 🧭 Project Structure
+
+```bash
+src/
+  ├── assets/          # Images, styles (Tailwind), background videos
+  ├── config/          # App-level configuration
+  ├── layouts/         # Layout components (e.g., HomeLayout)
+  ├── modules/         # Feature-specific modules (auth, suppliers, errors)
+  ├── navigation/      # Navigation setup (routes, redirects)
+  ├── shared/          # Reusable components, hooks, context, services
+  ├── App.tsx          # Root component
+  └── main.tsx         # Entry point
+```
+
+## ✅ Requirements
+
+- Node.js >= 18
+
+- pnpm (recommended): Install globally via
+
+```bash
+npm install -g pnpm
+```
+
+- A working backend at the URL specified in VITE_BACKEND_API_URL
+
+## 🎨 Stack
+
+- React (Functional components, Hooks)
+
+- Vite (Blazing-fast dev/build tool)
+
+- Tailwind CSS (Utility-first styling)
+
+- TypeScript (Static typing)
