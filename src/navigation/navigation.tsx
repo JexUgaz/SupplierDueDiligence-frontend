@@ -7,6 +7,7 @@ import {
   SupplierEditPage,
   SupplierListPage,
 } from "@/modules/suppliers/pages";
+import { NotFoundPage } from "@/modules/errors/pages/NotFoundPage";
 
 const loginRoute = "/login";
 const homeRoute = "/app";
@@ -25,8 +26,12 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: "*",
+    path: "/",
     element: <Navigate to={initRoute} replace />,
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ];
 

@@ -16,11 +16,17 @@ export class SupplierService
   getAll(
     query: SupplierQueryParams
   ): Promise<PaginatedResult<Supplier> | null> {
+    const { filters } = query;
     const queryParams: Record<string, string> = {
-      ...(query.businessName && { businessName: query.businessName }),
-      ...(query.countryId !== undefined && {
-        countryId: String(query.countryId),
+      ...(filters.businessName && { businessName: filters.businessName }),
+      ...(filters.countryId !== undefined && {
+        countryId: String(filters.countryId),
       }),
+      ...(filters.taxId && { taxId: filters.taxId }),
+      ...(filters.lastUpdatedFrom && {
+        lastUpdatedFrom: filters.lastUpdatedFrom,
+      }),
+      ...(filters.lastUpdatedTo && { lastUpdatedTo: filters.lastUpdatedTo }),
       page: String(query.page),
       pageSize: String(query.pageSize),
     };

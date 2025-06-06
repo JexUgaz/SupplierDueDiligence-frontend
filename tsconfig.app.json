@@ -12,7 +12,8 @@
       "@/navigation/*": ["./navigation/*"],
       "@/layouts/*": ["./layouts/*"],
       "@/shared/*": ["./shared/*"],
-      "@/assets/*": ["./assets/*"]
+      "@/assets/*": ["./assets/*"],
+      "@/config/*": ["./config/*"]
     },
     "types": ["vite/client", "node"],
 

@@ -1,28 +1,33 @@
 import type { PaginatedResult } from "@/shared/types/pagination";
 import type { Supplier } from "@/shared/types/supplier/Supplier";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { SupplierTable } from "@/modules/suppliers/components/SupplierTable";
 import { useNavigate } from "react-router-dom";
 import { SuppliersTableSkeleton } from "@/modules/suppliers/components/SuppliersTableSkeleton";
 import { TablePaginationControls } from "@/shared/components/table/TablePaginationControls";
 import { supplierService } from "@/modules/suppliers/services";
+import SupplierFiltersTable from "@/modules/suppliers/components/SupplierFiltersTable";
+import type { SupplierFilter } from "@/modules/suppliers/types/SupplierFilter";
 
 const SupplierListPage = () => {
   const navigate = useNavigate();
   const pageSize = 10;
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [dataPage, setDataPage] = useState<PaginatedResult<Supplier> | null>(
     null
   );
   const [loading, setLoading] = useState<boolean>(true);
-
+  const filtersRef = useRef<SupplierFilter>({});
+  const currentPageRef = useRef<number>(1);
   const metadata = dataPage?.pagination;
 
   const fetchData = useCallback(async () => {
     setLoading(true);
+    const page = currentPageRef.current;
+    const filters = filtersRef.current;
     try {
       const result = await supplierService.getAll({
-        page: currentPage,
+        filters,
+        page,
         pageSize: pageSize,
       });
       if (result == null) return;
@@ -30,11 +35,12 @@ const SupplierListPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [currentPage]);
+  }, [pageSize]);
 
-  useEffect(() => {
+  const onPagination = (newPage: number) => {
+    currentPageRef.current = newPage;
     fetchData();
-  }, [currentPage, fetchData]);
+  };
 
   const showSkeleton = loading && !dataPage;
 
@@ -59,6 +65,11 @@ const SupplierListPage = () => {
         </button>
       </div>
 
+      <SupplierFiltersTable
+        updateFilters={(filters) => (filtersRef.current = filters)}
+        onFetchData={fetchData}
+      />
+
       {showSkeleton && <SuppliersTableSkeleton />}
       {!showSkeleton && (
         <SupplierTable data={dataPage!.data} onRefresh={fetchData} />
@@ -68,8 +79,8 @@ const SupplierListPage = () => {
         <TablePaginationControls
           metadata={metadata!}
           loading={loading}
-          onNext={setCurrentPage}
-          onPrevious={setCurrentPage}
+          onNext={onPagination}
+          onPrevious={onPagination}
         />
       )}
     </div>

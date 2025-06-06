@@ -3,8 +3,10 @@ import type { IApiConnection, IApiRequestParams } from "./IApiConnection";
 import { AppException, UnknownException } from "@/shared/types/exceptions";
 import { ToastHelper } from "@/shared/helpers";
 import { AuthDispatcher } from "@/shared/helpers/AuthDispatcher";
+import { Config } from "@/config/Config";
 
 export abstract class SupplierDueDiligenceApi implements IApiConnection {
+  private readonly backendApiBase: string = Config.backendApiUrl;
   abstract apiBase: string;
 
   async request<T>({
@@ -20,7 +22,7 @@ export abstract class SupplierDueDiligenceApi implements IApiConnection {
         ? "?" + new URLSearchParams(queryParams).toString()
         : "";
 
-      const url = `http://localhost:5045/api${this.apiBase}${endpoint}${queryString}`;
+      const url = `${this.backendApiBase}${this.apiBase}${endpoint}${queryString}`;
 
       const allHeaders: Record<string, string> = {
         "Content-Type": "application/json",

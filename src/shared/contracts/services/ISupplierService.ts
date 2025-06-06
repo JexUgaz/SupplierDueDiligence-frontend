@@ -1,10 +1,10 @@
+import type { SupplierFilter } from "@/modules/suppliers/types/SupplierFilter";
 import type { PaginatedResult } from "@/shared/types/pagination";
 import type { SupplierDetails, Supplier } from "@/shared/types/supplier";
 import type { SupplierEditable } from "@/shared/types/supplier/SupplierEditable";
 
 export interface SupplierQueryParams {
-  businessName?: string;
-  countryId?: number;
+  filters: SupplierFilter;
   page: number;
   pageSize: number;
 }
