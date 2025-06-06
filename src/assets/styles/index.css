@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@theme {
+  --bg-nexora-gradient: linear-gradient(
+    181deg,
+    rgba(1, 20, 35, 0.98) 0%,
+    rgba(3, 50, 75, 0.95) 60%,
+    rgba(0, 80, 120, 0.9) 100%
+  );
+
+  --font-display: "Satoshi", "sans-serif";
+  --color-nexora-white: #ffffff;
+  --color-nexora-darkest: #023059;
+  --color-nexora-dark: #023859;
+  --color-nexora-accent: #0879a6;
+  --color-nexora-accent-light: #44a3c0;
+  --color-nexora-light: #f2f2f2;
+  --color-nexora-text: #0d0d0d;
+
+  --color-nexora-gray-dark: #4a4a4a;
+  --color-nexora-gray-medium: #9ca3af;
+  --color-nexora-gray-light: #d1d5db;
+
+  --color-nexora-error: #dc2626;
+  --color-nexora-error-light: #fee2e2;
+  --color-nexora-success: #16a34a;
+  --color-nexora-success-light: #dcfce7;
+  --color-nexora-warning: #d97706;
+  --color-nexora-warning-light: #fef3c7;
+  --color-nexora-info: #3b82f6;
+  --color-nexora-info-light: #dbeafe;
+}
