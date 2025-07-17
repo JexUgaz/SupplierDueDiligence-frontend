@@ -4,12 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "lint": "eslint .",
     "dev": "vite",
     "dev:prod": "vite --mode production",
     "dev:dev": "vite --mode development",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build": "tsc -b && vite build"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
