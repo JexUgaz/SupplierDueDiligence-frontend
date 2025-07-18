@@ -12,7 +12,7 @@ interface Props {
 }
 
 const LoginPage = ({ homeRoute }: Props) => {
-  const { user, isAuthLoading } = useAuth();
+  const { user, isAuthLoading, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -32,7 +32,7 @@ const LoginPage = ({ homeRoute }: Props) => {
       setIsLoading(true);
       const data = await authService.login(email, password);
       if (!data) return setError("Email or password is incorrect.");
-      // login(data);
+      login(data);
     } finally {
       setIsLoading(false);
     }
