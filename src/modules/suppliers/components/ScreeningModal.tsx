@@ -5,6 +5,9 @@ import { screeningService } from "@/modules/suppliers/services";
 import type { Source } from "@/shared/types/screening/Source";
 import type { ScreeningResponse } from "@/shared/types/screening/ScreeningResponse";
 import { ScreeningResultTable } from "./ScreeningResultTable";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
+import { cn } from "@/shared/helpers/utils";
 
 interface ScreeningModalProps {
   isOpen: boolean;
@@ -47,7 +50,7 @@ export const ScreeningModal = ({
   const toggleSource = (sourceCode: Source) => {
     if (selectedSources.includes(sourceCode)) {
       setSelectedSources(selectedSources.filter((s) => s.id !== sourceCode.id));
-    } else if (selectedSources.length < 3) {
+    } else if (selectedSources.length < availableSources.length) {
       setSelectedSources([...selectedSources, sourceCode]);
     }
   };
@@ -61,7 +64,7 @@ export const ScreeningModal = ({
       setScreeningResponse(null);
       const data = await screeningService.screening(
         supplier!.id!,
-        selectedSources
+        selectedSources,
       );
       if (!data) return;
       setScreeningResponse(data);
@@ -149,28 +152,56 @@ export const ScreeningModal = ({
                   htmlFor="sourceSelect"
                   className="block mb-2 text-sm font-medium"
                 >
-                  Select sources (1-3):
+                  Select sources (1-{availableSources.length}):
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {availableSources.map((source) => {
                     const { enable } = source;
+
+                    const className = cn(
+                      "px-3 py-1 rounded-full border text-sm",
+                      enable && "cursor-pointer",
+                      enable &&
+                        (isSelected(source)
+                          ? "bg-nexora-accent text-white border-nexora-accent hover:bg-nexora-accent-light"
+                          : "bg-nexora-white text-nexora-darkest hover:bg-nexora-light border-nexora-gray-light"),
+                      !enable &&
+                        "bg-nexora-light text-nexora-gray border-nexora-gray-light opacity-60 cursor-help",
+                    );
+
+                    if (!enable) {
+                      return (
+                        <Tippy
+                          key={source.code}
+                          content="This source is temporarily unavailable because the screening service is currently under development."
+                        >
+                          <span className={className}>{source.name}</span>
+                        </Tippy>
+                      );
+                    }
+
                     return (
                       <button
                         key={source.code}
                         type="button"
-                        onClick={() => (enable ? toggleSource(source) : null)}
-                        disabled={loading || !enable}
-                        className={`px-3 py-1 rounded-full border text-sm ${
-                          isSelected(source)
-                            ? "bg-nexora-accent text-white border-nexora-accent hover:bg-nexora-accent-light"
-                            : "bg-nexora-white text-nexora-darkest hover:bg-nexora-light border-nexora-gray-light"
-                        } disabled:opacity-50 cursor-pointer disabled:cursor-default`}
+                        onClick={() => toggleSource(source)}
+                        disabled={loading}
+                        className={className}
                       >
                         {source.name}
                       </button>
                     );
                   })}
                 </div>
+                {selectedSources.length > 1 && (
+                  <div className="mt-4 rounded-md border border-yellow-300 bg-yellow-50 px-4 py-3 text-sm text-yellow-800">
+                    <strong>Recommendation:</strong> This demo uses limited
+                    infrastructure for web scraping. Searching multiple sources
+                    simultaneously may result in slower responses or temporary
+                    failures.
+                  </div>
+                )}
+
                 {selectedSources.length > 0 && (
                   <p className="mt-10 text-sm text-nexora-darkest">
                     <strong>Sources to be searched:</strong>{" "}
