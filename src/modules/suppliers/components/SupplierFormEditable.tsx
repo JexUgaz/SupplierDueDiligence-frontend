@@ -129,8 +129,8 @@ export const SupplierFormEditable = ({ initialData, countries }: Props) => {
             register={register("taxId", {
               required: "TaxId is required",
               pattern: {
-                value: /^\d{30}$/,
-                message: "TaxId must contain exactly 30 digits",
+                value: /^\d{1,30}$/,
+                message: "TaxId must contain up to 30 digits",
               },
             })}
             error={errors.taxId}

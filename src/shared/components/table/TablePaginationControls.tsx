@@ -44,12 +44,12 @@ export const TablePaginationControls = ({
   const { end, start } = getPaginationRange({ page, pageSize, totalItems });
 
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 pt-4 text-sm text-gray-700">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-gray-200 pt-4 text-sm text-gray-700">
       <span>
         Showing <strong>{start}</strong>–<strong>{end}</strong> of{" "}
         <strong>{totalItems}</strong>
       </span>
-      <div className="space-x-2">
+      <div className="space-x-2 self-end sm:self-auto">
         <button
           disabled={!hasPreviousPage}
           onClick={() => (hasPreviousPage ? onPrevious(previousPage!) : null)}
