@@ -14,7 +14,7 @@ export class SupplierService
   apiBase: string = "/supplier";
 
   getAll(
-    query: SupplierQueryParams
+    query: SupplierQueryParams,
   ): Promise<PaginatedResult<Supplier> | null> {
     const { filters } = query;
     const queryParams: Record<string, string> = {
@@ -31,10 +31,7 @@ export class SupplierService
       pageSize: String(query.pageSize),
     };
 
-    return super.request<PaginatedResult<Supplier>>({
-      endpoint: "",
-      queryParams,
-    });
+    return super.request<PaginatedResult<Supplier>>({ queryParams });
   }
 
   getById(id: number): Promise<SupplierDetails | null> {
@@ -59,7 +56,7 @@ export class SupplierService
   }
   update(
     id: number,
-    supplier: SupplierEditable
+    supplier: SupplierEditable,
   ): Promise<SupplierDetails | null> {
     return this.request<SupplierDetails>({
       endpoint: `/${id}`,

@@ -11,12 +11,13 @@ export abstract class SupplierDueDiligenceApi implements IApiConnection {
 
   async request<T>({
     body,
-    endpoint,
+    endpoint = "",
     method = "GET",
     headers = {},
-    showSuccessMessage,
+    showSuccessMessage = false,
+    showErrorMessage = true,
     queryParams,
-  }: IApiRequestParams): Promise<T | null> {
+  }: IApiRequestParams = {}): Promise<T | null> {
     try {
       const queryString = queryParams
         ? "?" + new URLSearchParams(queryParams).toString()
@@ -44,7 +45,7 @@ export abstract class SupplierDueDiligenceApi implements IApiConnection {
           error.type,
           error.details,
           error.code,
-          response.message
+          response.message,
         );
       }
 
@@ -52,21 +53,16 @@ export abstract class SupplierDueDiligenceApi implements IApiConnection {
       return response.data!;
     } catch (e: unknown) {
       let error: AppException;
-      let isUnauthorized = false;
 
       if (e instanceof AppException) {
-        if (e.type === "UNAUTHORIZED") {
-          AuthDispatcher.logout();
-          isUnauthorized = true;
-        }
+        if (e.type === "UNAUTHORIZED") AuthDispatcher.logout();
         error = e;
       } else if (e instanceof Error) {
         error = new UnknownException(e.message);
       } else {
         error = new UnknownException("Unknown error");
       }
-
-      if (!isUnauthorized) ToastHelper.error(error.message);
+      if (showErrorMessage) ToastHelper.error(error.message);
       return null;
     }
   }

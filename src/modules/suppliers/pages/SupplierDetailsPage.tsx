@@ -4,13 +4,14 @@ import { SupplierDetailsSkeleton } from "@/modules/suppliers/components/Supplier
 import { supplierService } from "@/modules/suppliers/services";
 import type { SupplierDetails } from "@/shared/types/supplier";
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 const SupplierDetailsPage = () => {
   const { id } = useParams();
   const [supplier, setSupplier] = useState<SupplierDetails | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const idIsNotNumber = isNaN(Number(id));
+  const idIsNotNumber = Number.isNaN(Number(id));
   const isNotFound = !id || idIsNotNumber;
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const SupplierDetailsPage = () => {
     fetchData();
   }, [isNotFound, id]);
 
-  if (isNotFound) return <div>Not found</div>;
+  if (isNotFound) return <Navigate to="/404" replace />;
   if (loading || !supplier) return <SupplierDetailsSkeleton />;
 
   return (

@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const data = await authService.getUserByToken();
+        const data = await authService.checkSession();
         if (!data) return logout();
         setUser(data);
       } finally {
@@ -29,11 +29,14 @@ export const AuthProvider = ({ children }: Props) => {
 
   const login = (data: User) => setUser(data);
 
-  const logout = () => setUser(null);
+  const logout = async () => {
+    await authService.logout();
+    setUser(null);
+  };
 
   const value = useMemo<AuthContextProps>(
     () => ({ user, login, logout, isAuthLoading }),
-    [user, isAuthLoading]
+    [user, isAuthLoading],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

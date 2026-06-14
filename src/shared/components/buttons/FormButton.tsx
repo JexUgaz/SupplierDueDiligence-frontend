@@ -1,3 +1,4 @@
+import { cn } from "@/shared/helpers/utils";
 import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -39,24 +40,42 @@ const FormButton = ({
 
   const isCancel = variant === "cancel";
   const isDanger = variant === "danger";
-  const prefixAccentVariant = isDanger ? "nexora-error" : "nexora-accent";
-  const prefixDarkestVariant = isDanger ? "nexora-error" : "nexora-darkest";
-
-  const variantClasses = isCancel
-    ? "border border-nexora-error text-nexora-error hover:bg-nexora-error-light focus:ring-nexora-error-light"
-    : `bg-${prefixAccentVariant} hover:bg-${prefixDarkestVariant} focus:ring-${prefixDarkestVariant} text-white`;
 
   const type = props.type ?? (variant === "default" ? "submit" : "button");
   const isDisabled = loading || props.disabled;
-  const opacityClass = isDisabled ? "opacity-50" : "";
-
   return (
     <button
       {...props}
       type={type}
-      className={`${baseClasses} ${variantClasses} ${opacityClass} ${
-        props.className ?? ""
-      }`}
+      className={cn(
+        baseClasses,
+
+        isCancel && [
+          "border",
+          "border-nexora-error",
+          "text-nexora-error",
+          "hover:bg-nexora-error-light",
+          "focus:ring-nexora-error-light",
+        ],
+
+        variant === "default" && [
+          "bg-nexora-accent",
+          "hover:bg-nexora-darkest",
+          "focus:ring-nexora-darkest",
+          "text-white",
+        ],
+
+        isDanger && [
+          "bg-nexora-error",
+          "hover:bg-nexora-error",
+          "focus:ring-nexora-error",
+          "text-white",
+        ],
+
+        isDisabled && "opacity-50",
+
+        props.className,
+      )}
       disabled={isDisabled}
     >
       {loading && <Loading />}

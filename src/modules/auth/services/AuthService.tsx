@@ -19,9 +19,19 @@ export class AuthService
     });
   }
 
-  getUserByToken(): Promise<User | null> {
-    return super.request<User>({
-      endpoint: "",
+  async logout(): Promise<boolean> {
+    const result = await super.request<boolean>({
+      endpoint: "/logout",
+      method: "POST",
     });
+    return result ?? false;
+  }
+
+  getUserByToken(): Promise<User | null> {
+    return super.request<User>();
+  }
+
+  checkSession(): Promise<User | null> {
+    return super.request<User>({ showErrorMessage: false });
   }
 }

@@ -13,8 +13,8 @@ interface Props {
 
 const LoginPage = ({ homeRoute }: Props) => {
   const { user, isAuthLoading, login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("maria.garcia@example.com");
+  const [password, setPassword] = useState("mariapassword");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 

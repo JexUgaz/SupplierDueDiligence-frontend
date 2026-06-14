@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import FormButton from "../buttons/FormButton";
+import { cn } from "@/shared/helpers/utils";
 
 interface Props {
   isOpen: boolean;
@@ -71,9 +72,10 @@ export const SimpleModal = ({
 
           <div className="p-4 md:p-5 text-center">
             <svg
-              className={`mx-auto mb-4 w-12 h-12 ${
-                isDanger ? "text-nexora-error" : "text-nexora-darkest"
-              }`}
+              className={cn(
+                "mx-auto mb-4 w-12 h-12",
+                isDanger ? "text-nexora-error" : "text-nexora-darkest",
+              )}
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

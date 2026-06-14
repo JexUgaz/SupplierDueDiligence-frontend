@@ -9,8 +9,6 @@ export class CountryService
   apiBase: string = "/countries";
 
   getAll(): Promise<Country[] | null> {
-    return super.request<Country[]>({
-      endpoint: "",
-    });
+    return super.request<Country[]>();
   }
 }
