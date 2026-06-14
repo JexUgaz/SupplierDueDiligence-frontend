@@ -125,12 +125,12 @@ export const SupplierFormEditable = ({ initialData, countries }: Props) => {
           />
           <FormInput
             label="Tax ID"
-            placeholder="Enter tax ID (11 digits)"
+            placeholder="Enter tax ID (30 digits)"
             register={register("taxId", {
               required: "TaxId is required",
               pattern: {
-                value: /^\d{11}$/,
-                message: "TaxId must contain exactly 11 digits",
+                value: /^\d{30}$/,
+                message: "TaxId must contain exactly 30 digits",
               },
             })}
             error={errors.taxId}
