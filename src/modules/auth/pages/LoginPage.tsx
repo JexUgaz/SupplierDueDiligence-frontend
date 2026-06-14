@@ -64,7 +64,7 @@ const LoginPage = ({ homeRoute }: Props) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 rounded-lg border border-nexora-gray-light focus:ring-2 focus:ring-nexora-accent focus:outline-none placeholder-nexora-gray-medium text-nexora-text"
-              placeholder="Correo electrónico"
+              placeholder="Email"
             />
           </div>
           <div>
@@ -73,7 +73,7 @@ const LoginPage = ({ homeRoute }: Props) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 rounded-lg border border-nexora-gray-light focus:ring-2 focus:ring-nexora-accent focus:outline-none placeholder-nexora-gray-medium text-nexora-text"
-              placeholder="Contraseña"
+              placeholder="Password"
             />
           </div>
           {error && (
